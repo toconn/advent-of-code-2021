@@ -27,10 +27,6 @@ def to_password(line):
 		int(max),
 		password)
 
-data = parse(DATA_TEST)
-data = parse(DATA_ACTUAL)
-
-
 # Part 1 ######################
 
 def count_valid_by_count(passwords):
@@ -53,6 +49,10 @@ def count_valid_by_position(passwords):
 def is_valid_by_position(password):
 	return ((password.password[password.min - 1] == password.letter and password.password[password.max - 1] != password.letter) 
 		or (password.password[password.min - 1] != password.letter and password.password[password.max - 1] == password.letter))
+
+
+data = parse(DATA_TEST)
+data = parse(DATA_ACTUAL)
 
 
 nl()

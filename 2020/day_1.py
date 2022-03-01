@@ -25,7 +25,7 @@ def find_triple(data):
 	return 0, 0, 0
 
 
-# data = parse(DATA_TEST)
+data = parse(DATA_TEST)
 data = parse(DATA_ACTUAL)
 
 item_1_1, item_1_2 = find_pair(data)
