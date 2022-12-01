@@ -67,6 +67,7 @@ print ('Total:', len(passports))
 print ('Valid:', count_valid(passports))
 
 
+
 # Part 2 ######################
 
 def get_digits(value):
@@ -144,6 +145,7 @@ def is_valid_2(passport):
 
 def count_valid_2(passports):
 	return ([is_valid_2(passport) for passport in passports]).count(True)
+
 
 passports = to_passports_with_data(data)
 
