@@ -3,7 +3,7 @@
 from shared import *
 from dataclasses import dataclass
 
-from day_data import *
+from day_%day%_data import *
 
 # Types ────────────────────────────────────────────────────────────────────── #
 
@@ -23,10 +23,14 @@ def calculate(data):
 
 # Main ─────────────────────────────────────────────────────────────────────── #
 
+def run():
+	print ("Answer:", calculate(DATA_1))
+	
+
 def test():
 	answer = calculate(TEST)
-	print ("Test:", answer, "👍" if answer == TEST_ANSWER_1 else f'(≠ {TEST_ANSWER_1}) ❌')
+	print ("Test:", answer, "👍" if answer == TEST_ANSWER_%part% else f'(≠ {TEST_ANSWER_%part%}) ❌')
 
 
-# print ("Answer:", calculate(DATA_1))
+# run()
 test()

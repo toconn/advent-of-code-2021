@@ -17,11 +17,8 @@ from day_02_data import *
 # Solution ─────────────────────────────────────────────────────────────────── #
 
 def calculate(data):
-	total = 0
-	for game in to_lines(data):
-		shape_1, shape_2 = to_shapes(game)
-		total += score_game(shape_1, shape_2)
-	return total
+	scores = [score_game(game) for game in to_lines(data)]
+	return sum(scores)
 
 def score_result(shape_1, shape_2):
 	if shape_1 == shape_2:
@@ -43,7 +40,8 @@ def score_shape(shape):
 		case "scissors":
 			return 3
 
-def score_game(shape_1, shape_2):
+def score_game(game):
+	shape_1, shape_2 = to_shapes(game)
 	return score_shape(shape_2) + score_result(shape_1, shape_2)
 
 def to_shape(shape):

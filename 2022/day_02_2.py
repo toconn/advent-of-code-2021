@@ -42,11 +42,8 @@ SHAPES = {
 # Solution ─────────────────────────────────────────────────────────────────── #
 
 def calculate(data):
-	total = 0
-	for game in to_lines(data):
-		play, shape_1, shape_2 = to_SHAPES(game)
-		total += score_game(shape_1, shape_2)
-	return total
+	scores = [score_game(game) for game in to_lines(data)]
+	return sum(scores)
 
 def score_result(shape_1, shape_2):
 	if shape_1 == shape_2:
@@ -58,7 +55,8 @@ def score_result(shape_1, shape_2):
 def score_shape(shape):
 	return SHAPES[shape].score
 
-def score_game(shape_1, shape_2):
+def score_game(game):
+	shape_1, shape_2 = to_shapes(game)
 	return score_shape(shape_2) + score_result(shape_1, shape_2)
 
 def to_player_2_shape(shape, play):
@@ -68,9 +66,9 @@ def to_player_2_shape(shape, play):
 		return SHAPES[shape].win
 	return shape
 
-def to_SHAPES(game):
+def to_shapes(game):
 	shape_1, play = game.split(' ')
-	return play, shape_1, to_player_2_shape(shape_1, play)
+	return shape_1, to_player_2_shape(shape_1, play)
 
 # Main ─────────────────────────────────────────────────────────────────────── #
 

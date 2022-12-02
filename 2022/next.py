@@ -14,10 +14,9 @@ ALREADY_EXISTS = '''Matching files already exist.
 
 PROG_TEMPLATE = '· template day.py'
 DATA_TEMPLATE = '· template day_data.py'
-DATA_IMPORT_REPLACE = 'day_data'
 
-PROG_FILE = 'day_{:02}_{}.py'
-DATA_IMPORT = 'day_{:02}_data'
+PROG_FILE = 'day_%day%_%part%.py'
+DATA_IMPORT = 'day_%day%_data'
 PROG_FILE_SEARCH = 'day_*_1.py'
 
 
@@ -41,18 +40,14 @@ def create_data_file(day):
 
 def create_prog_file(day):
 	content = read(PROG_TEMPLATE)
-	actual = content.replace(DATA_IMPORT_REPLACE, data_import(day))
-	write(prog_file_name(day, 1), actual)
-	write(prog_file_name(day, 2), actual)
+	write(prog_file_name(day, 1), update(content, day, 1))
+	write(prog_file_name(day, 2), update(content, day, 2))
 
 def data_import(day):
-	return DATA_IMPORT.format(day)
+	return update(DATA_IMPORT, day, 1)
 
 def data_file_name(day):
 	return data_import(day) + '.py'
-
-def prog_file_name(day, number):
-	return PROG_FILE.format(day, number)
 
 def next_day():
 	argument_1 = argument(0).lower()
@@ -61,6 +56,9 @@ def next_day():
 		return int(argument_1)
 
 	return next_day_file()
+
+def prog_file_name(day, number):
+	return update(PROG_FILE, day, number)
 
 def next_day_file():
 	return max(read_file_numbers()) + 1
@@ -76,6 +74,9 @@ def show_already_exists():
 
 def show_help():
 	print(HELP)
+
+def update(content, day, part = 0):
+	return content.replace('%day%', f'{day:02}').replace('%part%', f'{part}')
 
 # Main ─────────────────────────────────────────────────── #
 
