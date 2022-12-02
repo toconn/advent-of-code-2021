@@ -16,7 +16,6 @@ def to_calories_by_elf(data):
 
 		if is_blank(value):
 			by_elf.append(calories)
-			print(calories)
 			calories = 0
 
 		else:

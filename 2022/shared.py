@@ -53,7 +53,73 @@ NEWLINE = '\n'
 # title
 
 
-# Arguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Colors ───────────────────────────────────────────────────────────────────── #
+
+# Special Colors ───────────────────── #
+
+DEFAULT_COLOR='\x1B[0m'
+DEFAULT_BACKGROUND='\x1B[49m'
+RESET_COLOR='\x1B[0m'
+
+# Foreground ───────────────────────── #
+
+BLACK='\x1B[30m'
+DARK_GRAY='\x1B[90m'
+LIGHT_GRAY='\x1B[37m'
+WHITE='\x1B[97m'
+BLUE='\x1B[34m'
+CYAN='\x1B[36m'
+GREEN='\x1B[32m'
+PURPLE='\x1B[35m'
+MAGENTA='\x1B[35m'
+RED='\x1B[31m'
+YELLOW='\x1B[33m'
+LIGHT_BLUE='\x1B[94m'
+LIGHT_CYAN='\x1B[96m'
+LIGHT_GREEN='\x1B[92m'
+LIGHT_PURPLE='\x1B[95m'
+LIGHT_MAGENTA='\x1B[95m'
+LIGHT_RED='\x1B[91m'
+LIGHT_YELLOW='\x1B[93m'
+
+# Background ───────────────────────── #
+
+ON_BLACK='\x1B[40m'
+ON_DARK_GRAY='\x1B[100m'
+ON_LIGHT_GRAY='\x1B[47m'
+ON_WHITE='\x1B[107m'
+ON_BLUE='\x1B[44m'
+ON_CYAN='\x1B[46m'
+ON_GREEN='\x1B[42m'
+ON_PURPLE='\x1B[45m'
+ON_MAGENTA='\x1B[45m'
+ON_RED='\x1B[41m'
+ON_YELLOW='\x1B[43m'
+ON_LIGHT_BLUE='\x1B[104m'
+ON_LIGHT_CYAN='\x1B[106m'
+ON_LIGHT_GREEN='\x1B[102m'
+ON_LIGHT_YELLOW='\x1B[103m'
+ON_LIGHT_PURPLE='\x1B[105m'
+ON_LIGHT_MAGENTA='\x1B[105m'
+ON_LIGHT_RED='\x1B[101m'
+ON_LIGHT_YELLOW='\x1B[103m'
+
+# Styles ───────────────────────────── #
+
+BOLD='\x1B[1m'
+BLINK='\x1B[5m'
+DIMMED='\x1B[2m'
+ITALIC='\x1B[3m'
+REVERSED='\x1B[7m'
+STRIKETHROUGH='\x1B[9m'
+UNDERLINE='\x1B[4m'
+
+# User Defined ─────────────────────── #
+
+VAR=f"{ITALIC}{LIGHT_MAGENTA}"
+
+
+# Arguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
 def argument(number, default = ''):
 	''' Returns the command line parameter
@@ -62,7 +128,7 @@ def argument(number, default = ''):
 		Index is 0 based.
 	'''
 
-	if len(argv) > number + 1:
+	if len(argv) > number:
 		return argv[number + 1]
 	return default
 
@@ -71,21 +137,21 @@ def arguments():
 
 def argument_count():
 	return len(argv) - 1
-	
+
 def no_arguments():
 	''' Returns True if there are
 		no command line parameters
 	'''
-	return argument_count() == 0
+	return len(argv) <= 1
 
 def not_enough_arguments(expected):
-    return argument_count() < expected
+    return len(argv) <= expected
 
 def outside_argument_range(min, max):
 	return argument_count() < min or argument_count() > max
 
 
-# General Utils ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# General Utils ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
 class First:
 
@@ -134,7 +200,7 @@ def not_empty(value):
 	return not is_empty(value)
 
 
-# Files ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Files ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
 def file_exists(file_name):
 	return exists(file_name)
@@ -156,7 +222,7 @@ def write_lines(file_name, lines):
 		file.write('\n'.join(lines))
 
 
-# Strings ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Strings ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
 def after(text, match):
 	if match in text:
@@ -180,7 +246,7 @@ def to_lines(value):
 	return value.split('\n')
 
 
-# Print ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Print ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
 def dot_dot_dot(text, length):
 
@@ -271,8 +337,7 @@ def print_head(heading):
 
 def print_heading(heading):
 
-	nl()
-	print(("* " + heading + " ").ljust(HEADING_WIDTH, "*"))
+	print(LIGHT_GREEN + ("──  " + heading + "  ").ljust(HEADING_WIDTH, "─") + RESET_COLOR)
 	nl()
 
 
@@ -355,16 +420,16 @@ def print_middle(value, value_2 = None):
 
 def print_short_heading(heading):
 	nl()
-	print(("** " + heading + " **"))
+	print(("── " + heading + " ──"))
 	nl()
 
 
 def print_title(title):
 
 	nl()
-	print("*" * HEADING_WIDTH)
-	print(("** " + title + " ").ljust(HEADING_WIDTH - 2) + "**")
-	print("*" * HEADING_WIDTH)
+	print(GREEN + '┌─' + '─' * (HEADING_WIDTH - 4) + '─┐')
+	print(('│ ' + title).ljust(HEADING_WIDTH - 2) + ' │')
+	print('└─' + '─' * (HEADING_WIDTH - 4) + '─┘' + RESET_COLOR)
 	nl()
 
 
@@ -394,4 +459,3 @@ def short_heading(heading):
 
 def title(title):
 	print_title(title)
-

@@ -3,7 +3,7 @@
 from shared import *
 from dataclasses import dataclass
 
-from day_0x_data import *
+from day_02_data import *
 
 # Types ────────────────────────────────────────────────────────────────────── #
 
