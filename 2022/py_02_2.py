@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from shared import *
+from py_shared import *
 from dataclasses import dataclass
 
-from day_02_data import *
+from py_02_data import *
 
 # A - 1, Rock
 # B - 2, Paper

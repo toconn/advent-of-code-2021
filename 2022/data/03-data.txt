@@ -1,14 +1,4 @@
-TEST = '''vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw'''
-
-TEST_ANSWER_1 = 157
-TEST_ANSWER_2 = 70
-
-DATA_1 = '''NJvhJcQWTJWTNTFFMTqqGqfTmB
+NJvhJcQWTJWTNTFFMTqqGqfTmB
 VwVzPldRZVLVRmfsvfjvqfmm
 ZDPDHZHVcvDhbvnv
 FHHwHBzzVCWWmmCzCPrVmgBwbLTtRFFbbbttRGRLjTcLpbbT
@@ -307,4 +297,4 @@ zCrlZzCblBvnCDWNGLmvGDLPNG
 dqZglgbzrzbbgZqzTFSBHHFJSSSfjjSMfwhj
 NMWJSjLMCnHHNMNNHWCHMbVVGBPZTrPVPBVDrBSDGTTr
 zvttlFpgdtldwwvftPDPTWQdBZrsrWrGBZ
-hFlFmhRFvfCbmWJWHcnj'''
+hFlFmhRFvfCbmWJWHcnj

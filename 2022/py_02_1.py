@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from shared import *
+from py_shared import *
 
-from day_02_data import *
+from py_02_data import *
 
 # A, X - 1, Rock
 # B, Y - 2, Paper
