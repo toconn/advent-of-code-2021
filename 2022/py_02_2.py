@@ -41,7 +41,7 @@ SHAPES = {
 
 # Solution ─────────────────────────────────────────────────────────────────── #
 
-def calculate(data):
+def solve(data):
 	scores = [score_game(game) for game in to_lines(data)]
 	return sum(scores)
 
@@ -73,10 +73,10 @@ def to_shapes(game):
 # Main ─────────────────────────────────────────────────────────────────────── #
 
 def test():
-	answer = calculate(TEST)
+	answer = solve(TEST)
 	print ('Test:', answer, '👍' if answer == TEST_ANSWER_2 else f'(≠ {TEST_ANSWER_2}) ❌')
 
 
-print ('Answer:', calculate(DATA_1))
+print ('Answer:', solve(DATA_1))
 # test()
 

@@ -16,7 +16,7 @@ from py_02_data import *
 
 # Solution ─────────────────────────────────────────────────────────────────── #
 
-def calculate(data):
+def solve(data):
 	scores = [score_game(game) for game in to_lines(data)]
 	return sum(scores)
 
@@ -58,10 +58,10 @@ def to_shapes(game):
 	return to_shape(shape_1), to_shape(shape_2)
 
 def test():
-	answer = calculate(TEST)
+	answer = solve(TEST)
 	print ("Test:", answer, "👍" if answer == TEST_ANSWER else f'(≠ {TEST_ANSWER}) ❌')
 
 
-print ("Answer:", calculate(DATA_1))
+print ("Answer:", solve(DATA_1))
 # test()
 

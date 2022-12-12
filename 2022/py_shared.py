@@ -16,40 +16,41 @@ def path(day, postfix):
 	return join(DATA_DIR, f'{day:02}{postfix}')
 
 def read_data(day):
-    return read_trimmed_lines(path(day, DATA_FILE))
+	return read_lines(path(day, DATA_FILE))
 
 def read_test(day):
-    return read_trimmed_lines(path(day, TEST_FILE))
+	return read_lines(path(day, TEST_FILE))
 
 def read_test_answer(day, index):
-    lines = read_trimmed_lines(path(day, TEST_ANSWERS_FILE))
-    return int(lines[index - 1])
+	lines = read_lines(path(day, TEST_ANSWERS_FILE))
+	return lines[index - 1]
 
 # AOC Main ─────────────────────────────────────────────── #
 
 def run_test(day, part, solve):
-    nl()
-    solve_test(day, part, solve)
-    nl()
+	nl()
+	solve_test(day, part, solve)
+	nl()
 
 def run_test_and_actual(day, part, solve):
-    nl()
-    solve_test(day, part, solve)
-    solve_actual(day, solve)
-    nl()
+	nl()
+	solve_test(day, part, solve)
+	nl()
+	solve_actual(day, solve)
+	nl()
 
 def solve_actual(day, solve):
-    answer = solve(read_data(day))
-    print(f"Answer: {answer:<6}")
+	answer = solve(read_data(day))
+	print(f"Answer: {answer:<6}")
 
 def solve_test(day, part, solve):
-    expected = read_test_answer(day, part)
-    actual = solve(read_test(day))
+	expected = read_test_answer(day, part)
+	actual = str(solve(read_test(day)))
 
-    if actual == expected:
-        print(f'Test:   {actual:<6} 👍')
-    else:
-        print(f'Test:   {actual:<6} (≠ {expected}) ❌')
+	if actual == expected:
+		print(f'Test:   {actual:<6} 👍')
+	else:
+		print(f'Test:   {actual:<6} (≠ {expected}) ❌')
 
 # Colors ───────────────────────────────────────────────── #
 
@@ -143,7 +144,7 @@ def no_arguments():
 	return argument_count() == 0
 
 def not_enough_arguments(expected):
-    return argument_count() < expected
+	return argument_count() < expected
 
 def outside_argument_range(min, max):
 	return argument_count() < min or argument_count() > max
@@ -151,19 +152,19 @@ def outside_argument_range(min, max):
 # Utils ────────────────────────────────────────────────── #
 
 def either(value_1, value_2):
-    if value_1 is None:
-        return value_2
-    return value_1
+	if value_1 is None:
+		return value_2
+	return value_1
 
 def iif(condition, true_value, false_value=None):
-    if condition:
-        return true_value
-    return false_value
+	if condition:
+		return true_value
+	return false_value
 
 def iif_not(condition, true_value, false_value=None):
-    if condition:
-        return false_value
-    return true_value
+	if condition:
+		return false_value
+	return true_value
 
 # Files ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #
 
@@ -179,8 +180,16 @@ def read_lines(file_name):
 		return [line.rstrip('\n') for line in file]
 
 def read_trimmed_lines(file_name):
-	content = read(file_name).strip()
-	return to_lines(content)
+	content = read(file_name)
+	lines = to_lines(content)
+
+	while(is_blank(lines[0])):
+		lines.pop(0)
+
+	while(is_blank(lines[-1])):
+		lines.pop()
+
+	return lines
 
 def write(file_name, contents):
 	with open(file_name, 'w') as file:

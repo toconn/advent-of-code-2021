@@ -38,6 +38,7 @@ pub fn run_test(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
 pub fn run_test_and_actual(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
     nl();
     solve_test(day, part, solve);
+    nl();
     solve_actual(day, solve);
     nl();
 }
