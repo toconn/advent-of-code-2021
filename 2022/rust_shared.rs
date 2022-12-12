@@ -29,6 +29,11 @@ pub fn read_test_answer(day: usize, index: usize) -> isize {
 
 // AOC - Main ─────────────────────────────────────────── //
 
+pub fn run_actual(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
+    solve_actual(day, part, solve);
+    nl();
+}
+
 pub fn run_test(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
     nl();
     solve_test(day, part, solve);
@@ -36,11 +41,8 @@ pub fn run_test(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
 }
 
 pub fn run_test_and_actual(day: usize, part: usize, solve: fn(Vec<String>) -> isize) {
-    nl();
-    solve_test(day, part, solve);
-    nl();
-    solve_actual(day, solve);
-    nl();
+    run_test(day, part, solve);
+    run_actual(day, part, solve);
 }
 
 fn solve_actual(day: usize, solve: fn(Vec<String>) -> isize) {

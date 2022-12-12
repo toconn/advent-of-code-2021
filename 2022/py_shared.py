@@ -27,17 +27,18 @@ def read_test_answer(day, index):
 
 # AOC Main ─────────────────────────────────────────────── #
 
+def run_actual(day, part, solve):
+	solve_actual(day, solve)
+	nl()
+
 def run_test(day, part, solve):
 	nl()
 	solve_test(day, part, solve)
 	nl()
 
 def run_test_and_actual(day, part, solve):
-	nl()
-	solve_test(day, part, solve)
-	nl()
-	solve_actual(day, solve)
-	nl()
+	run_test(day, part, solve)
+	run_actual(day, part, solve)
 
 def solve_actual(day, solve):
 	answer = solve(read_data(day))

@@ -1,8 +1,8 @@
 mod rust_shared;
 use rust_shared::*;
 
-const DAY: usize = %day%;
-const PART: usize = %part%;
+const DAY: usize = 8;
+const PART: usize = 1;
 
 // Solution ───────────────────────────────────────────────────────────────── //
 
@@ -17,7 +17,6 @@ fn solve_line(line: &str) -> isize {
 // Main ───────────────────────────────────────────────────────────────────── //
 
 fn main() {
-	nl()
-	run_test(DAY, PART, solve);
-	// run_actual(DAY, PART, solve);
+	// run_test(DAY, PART, solve);
+	run_test_and_actual(DAY, PART, solve);
 }
