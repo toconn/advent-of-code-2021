@@ -25,5 +25,5 @@ def score(match_set):
 
 # Main ─────────────────────────────────────────────────────────────────────── #
 
-# run_test(DAY, PART, solve)
-run_test_and_actual(DAY, PART, solve)
+run_test(DAY, PART, solve)
+run_actual(DAY, PART, solve)

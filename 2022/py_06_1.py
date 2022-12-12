@@ -9,7 +9,6 @@ PART = 1;
 
 def solve(data):
 
-	index = 0
 	letters = [letter for letter in data[0]]
 
 	for index in range(4, len(letters)):
@@ -22,5 +21,5 @@ def solve(data):
 
 # Main ─────────────────────────────────────────────────────────────────────── #
 
-# run_test(DAY, PART, solve)
-run_test_and_actual(DAY, PART, solve)
+run_test(DAY, PART, solve)
+run_actual(DAY, PART, solve)

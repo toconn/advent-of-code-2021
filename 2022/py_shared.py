@@ -36,10 +36,6 @@ def run_test(day, part, solve):
 	solve_test(day, part, solve)
 	nl()
 
-def run_test_and_actual(day, part, solve):
-	run_test(day, part, solve)
-	run_actual(day, part, solve)
-
 def solve_actual(day, solve):
 	answer = solve(read_data(day))
 	print(f"Answer: {answer:<6}")
@@ -179,18 +175,6 @@ def read(file_name):
 def read_lines(file_name):
 	with open(file_name, 'r') as file:
 		return [line.rstrip('\n') for line in file]
-
-def read_trimmed_lines(file_name):
-	content = read(file_name)
-	lines = to_lines(content)
-
-	while(is_blank(lines[0])):
-		lines.pop(0)
-
-	while(is_blank(lines[-1])):
-		lines.pop()
-
-	return lines
 
 def write(file_name, contents):
 	with open(file_name, 'w') as file:
