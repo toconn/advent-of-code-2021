@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+. bash.core
+
+NAME='run'
+
+
+# User Information ─────────────────────────────────────── #
+
+show_bad_directory() {
+
+	echo
+	error "Could not find directory: $1"
+
+	return 2
+}
+
+show_bad_module() {
+
+	echo
+	error "Could not find: $1.go or main.go"
+
+	return 2
+}
+
+show_help() {
+
+	color "Usage: ${COMMAND}${NAME} ${VARIABLE}<directory> [ <parameter>... ]${RESET}
+
+  help            |  h      This Information Here
+
+  ${VARIABLE}<directory>${RESET}     |         Run directory.
+
+                            Requires:
+                                ${VARIABLE}directory${RESET}.go
+                                or main.go
+"
+}
+
+
+# Main ─────────────────────────────────────────────────── #
+
+main() {
+
+	echo
+
+	if is_empty "$1"; then
+		command="help"
+	else
+		command="${1,,}"
+		shift
+	fi
+
+
+	case "$command" in
+
+		'help' | 'h')
+
+			show_help
+			;;
+
+		*)
+
+			if file_not_exists "$command"; then
+				show_bad_directory "$command"
+				return 2
+			fi
+
+			cd "$command"
+
+            if file_exists "$command.go"; then
+                go run "$command.go" "$@"
+            elif file_exists "main.go"; then
+                go run main.go "$@"
+            else
+                show_bad_module "$command"
+            fi
+
+			return ;;
+
+	esac
+}
+
+main "$@"

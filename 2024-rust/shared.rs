@@ -2,10 +2,16 @@
 
 use std::any::type_name;
 use std::env;
+use std::env::var;
 use std::error::Error;
 use std::fmt::Display;
+use std::fs::create_dir_all;
 use std::fs::metadata;
+use std::fs::read as read_to_binary;
+use std::fs::read_to_string;
 use std::fs::remove_file;
+use std::fs::write as write_to_binary;
+use std::io::Error as IoError;
 use std::path::MAIN_SEPARATOR;
 use std::path::Path;
 use std::time::SystemTime;
@@ -16,6 +22,8 @@ use std::time::Instant;
 const HEADING_WIDTH: usize = 60;
 const TITLE_WIDTH: usize = 80;
 const COLUMN_1_WIDTH: usize = 20;
+
+const INDENT: &str = "    ";
 
 // Constants - Colors ─────────────────────────────────── //
 
@@ -206,10 +214,6 @@ pub fn arguments() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
-pub fn has_argument(value: &str) -> bool {
-    in_strings(value, &arguments())
-}
-
 pub fn has_arguments() -> bool {
     env::args().count() > 1
 }
@@ -218,7 +222,29 @@ pub fn no_arguments() -> bool {
     !has_arguments()
 }
 
+// Environment ────────────────────────────────────────── //
+
+pub fn expand(variable: &str, default: Option<&str>) -> String {
+
+    if let Ok(value) = var(variable) {
+        return value;
+    }
+
+    if let Some(default) = default {
+        return default.to_string();
+    }
+
+    "".to_string()
+}
+
 // File Utils ─────────────────────────────────────────── //
+
+pub fn create_directory(path: &str) -> Result<(), IoError> {
+    if file_exists(&path) {
+        return Ok(());
+    }
+    create_dir_all(&path)
+}
 
 pub fn delete_file(path: &str) {
     if file_exists(&path) {
@@ -250,6 +276,30 @@ pub fn file_not_found(path: &str) -> bool {
 
 pub fn join(directory: &str, file: &str) -> String {
     format!("{}{}{}", directory, MAIN_SEPARATOR, file)
+}
+
+pub fn read(path: &str) -> Result<String, IoError> {
+    read_to_string(path)
+}
+
+pub fn read_binary(path: &str) -> Result<Vec<u8>, IoError> {
+    read_to_binary(path)
+}
+
+pub fn read_lines(path: &str) -> Result<Vec<String>, IoError> {
+    Ok(read(path)?.lines().map(|line| line.to_string()).collect())
+}
+
+pub fn write(path: &str, content: &str) -> Result<(), IoError> {
+    write_to_binary(path, content.as_bytes())
+}
+
+pub fn write_binary(path: &str, content: &[u8]) -> Result<(), IoError> {
+    write_to_binary(path, content)
+}
+
+pub fn write_lines(path: &str, lines: &Vec<String>) -> Result<(), IoError> {
+    write(path, &lines.join("\n"))
 }
 
 
@@ -288,22 +338,13 @@ pub fn file_stem(path: &str) -> Option<String> {
 
 // String Utils ───────────────────────────────────────── //
 
-pub fn in_strings(text: &str, list: &Vec<String>) -> bool {
-    for item in list {
-        if text == item {
-            return true;
-        }
-    }
-    false
+pub fn indent(text: &str, indent: usize) -> String {
+    indent_lines(to_lines(text), indent).join("\n")
 }
 
-pub fn in_strs(text: &str, list: &Vec<&str>) -> bool {
-    for item in list {
-        if text == item {
-            return true;
-        }
-    }
-    false
+pub fn indent_lines(lines: Vec<&str>, indent: usize) -> Vec<String> {
+    let indent = INDENT.repeat(indent);
+    lines.iter().map(|line| indent.clone() + line).collect()
 }
 
 pub fn is_blank(text: &str) -> bool {
@@ -393,6 +434,10 @@ pub fn right(text: &str, length: usize) -> String {
     return text.chars().skip(actual_length - length).collect();
 }
 
+pub fn to_lines(text: &str) -> Vec<&str> {
+    text.lines().collect()
+}
+
 /// Converts an array of &str into a vec of Strings.
 pub fn to_vec(items: &[&str]) -> Vec<String> {
     items.iter().map(|item| item.to_string()).collect()
@@ -414,6 +459,10 @@ pub fn color(color: &str, value: &str) {
 
 pub fn error(label: &str, error: &Box<dyn Error>) {
     print_error(label, error);
+}
+
+pub fn error_message(message: &str) {
+    color(ERROR, message);
 }
 
 pub fn heading(value: &str) {
@@ -447,6 +496,10 @@ pub fn print(value: &str) {
     println!("{}", value);
 }
 
+pub fn print_2(first: &str, second: &str) {
+    println!("{}  {}", pad_column_1(first), second);
+}
+
 pub fn print_array<T: Display>(label: &str, items: &[T]) {
     let mut first = First::new();
 
@@ -475,6 +528,10 @@ pub fn print_double(value: &str) {
 
 pub fn print_error(label: &str, error: &Box<dyn Error>) {
     println!("{}{} : {}{}", &LIGHT_RED, label, error, &RESET_COLOR);
+}
+
+pub fn print_error_message(message: &str) {
+    color(ERROR, message);
 }
 
 pub fn print_vec<T: Display>(label: &str, items: &Vec<T>) {

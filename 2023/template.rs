@@ -19,7 +19,10 @@ fn solve_line(line: &str) -> isize {
 // Main ───────────────────────────────────────────────────────────────────── //
 
 fn main() {
+
 	nl();
-	run_test(DAY, PART, solve);
-	// run_actual(DAY, PART, solve);
+	match has_argument("test") or has_argument("t") {
+		true => run_test(DAY, PART, solve);
+		false => run_actual(DAY, PART, solve);
+	}
 }
