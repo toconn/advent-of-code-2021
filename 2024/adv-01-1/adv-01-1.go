@@ -50,12 +50,11 @@ func parseAndSort(lines []string) ([]int, []int) {
 
 func main() {
 
-	path := shared.GetDataFile(DataActual, DataTest)
-
 	shared.Title("Advent 01 - 1")
 
-	lines, err := shared.ReadLines(path)
+	path := shared.SelectRunOption(DataActual, DataTest)
 
+	lines, err := shared.ReadLines(path)
 	shared.ExitOnError("Couldn't read: " + path, err)
 	
 	list1, list2 := parseAndSort(lines)

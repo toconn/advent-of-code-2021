@@ -9,11 +9,12 @@ import (
 	"strings"
 )
 
-const COLUMN_1_WIDTH = 30
-const COLUMN_SEPARATOR = ": "
-const HEADING_WIDTH = 60
-const INDENT = "    "
-const NEWLINE = "\n"
+const Column1Width = 30
+const ColumnSeparator = ": "
+const HeadingWidth = 60
+const Indent = "    "
+const Newline = "\n"
+const ShortHeadingWidth = 40
 
 // Colors ─────────────────────────────────────────────────────────────────── //
 
@@ -173,6 +174,17 @@ func ToInt(text string) int {
 	return value
 }
 
+func ToInts(items []string) []int {
+
+	var ints []int
+
+	for _, item  := range items {
+		ints = append(ints, ToInt(item))
+	}
+
+	return ints
+}
+
 // System ─────────────────────────────────────────────────────────────────── //
 
 func ExitOnError(message string, err error) {
@@ -210,13 +222,26 @@ func Heading(heading string) {
 
 	count := CharacterCount(heading) + 6
 
-	padded := formatted + strings.Repeat("─", HEADING_WIDTH - count)
+	padded := formatted + strings.Repeat("─", HeadingWidth - count)
 
 	fmt.Println(LIGHT_GREEN + padded + RESET_COLOR)
 	fmt.Println()
 }
 
 func NL() {
+	fmt.Println()
+}
+
+func ShortHeading(heading string) {
+
+	prefix := "──  "
+	formatted := prefix + heading + "  "
+
+	count := CharacterCount(heading) + 6
+
+	padded := formatted + strings.Repeat("─", ShortHeadingWidth - count)
+
+	fmt.Println(LIGHT_GREEN + padded + RESET_COLOR)
 	fmt.Println()
 }
 
@@ -227,15 +252,15 @@ func Title(name string) {
 	NL()
 	// Line 1: Top border
 	fmt.Print(GREEN)
-	fmt.Println("┌─" + strings.Repeat("─", HEADING_WIDTH - 4) + "─┐")
+	fmt.Println("┌─" + strings.Repeat("─", HeadingWidth - 4) + "─┐")
 
 	// Line 2: Title with padding
 	line := "│ " + name
-	line = line + strings.Repeat(" ", HEADING_WIDTH - count) + " │"
+	line = line + strings.Repeat(" ", HeadingWidth - count) + " │"
 	fmt.Println(line)
 
 	// Line 3: Bottom border
-	fmt.Println("└─" + strings.Repeat("─", HEADING_WIDTH - 4) + "─┘" + RESET_COLOR)
+	fmt.Println("└─" + strings.Repeat("─", HeadingWidth - 4) + "─┘" + RESET_COLOR)
 
 	NL()
 }

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func GetDataFile(actual string, test string) string {
+func SelectRunOption(actual string, test string) string {
 
 	if IsActual() {
 		return actual
@@ -28,9 +28,9 @@ func IsTest() bool {
 
 	command := arguments[0]
 
-	if strings.Contains("actual", command) {
+	if strings.HasPrefix("actual", command) {
 		return false
 	}
 
-	return strings.Contains("test", command)
+	return strings.HasPrefix("test", command)
 }
