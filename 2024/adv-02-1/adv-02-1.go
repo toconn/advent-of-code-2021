@@ -1,5 +1,7 @@
 package main
 
+// Answer: 624
+
 import (
 	"fmt"
 	"shared"

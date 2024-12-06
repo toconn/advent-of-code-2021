@@ -96,7 +96,7 @@ func IsEndOfFile(err error) bool {
 	return err != nil && err == io.EOF
 }
 
-// Reads a text file and returns a slice
+// Reads a text file and returns all the lines as a slice
 func ReadLines(path string) ([]string, error) {
 
 	file, err := os.Open(path)
@@ -115,6 +115,17 @@ func ReadLines(path string) ([]string, error) {
 	}
 
 	return lines, nil
+}
+
+// Reads a text file and returns all the lines as a slice, but without comments or blank lines
+func ReadLinesWithoutCommentsBlanks(path string) ([]string, error) {
+
+	lines, err := ReadLines(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return RemoveCommentsAndBlanks(lines), nil
 }
 
 // Strings ────────────────────────────────────────────────────────────────── //
