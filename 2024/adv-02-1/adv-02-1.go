@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const Title = "Advent-02-2"
+const Title = "Advent-02-1"
 
 const (
 	DataActual = "data-actual.txt"
@@ -67,10 +67,9 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataTest)
+	path := shared.SelectForTestOrActual(DataActual, DataTest)
 
-	lines, err := shared.ReadLines(path)
-	shared.ExitOnError("Couldn't read: " + path, err)
+	lines, _ := shared.ReadLines(path)
 	
 	allLevels := parse(lines)
 

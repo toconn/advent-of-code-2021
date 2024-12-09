@@ -60,10 +60,9 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataTest)
+	path := shared.SelectForTestOrActual(DataActual, DataTest)
 
-	lines, err := shared.ReadLines(path)
-	shared.ExitOnError("Couldn't read: " + path, err)
+	lines, _ := shared.ReadLines(path)
 	
 	list1, list2 := parseAndSort(lines)
 	counts := countOccurences(list2)

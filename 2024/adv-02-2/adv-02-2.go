@@ -82,7 +82,7 @@ func printLevel(level []int, safe bool, faultIndex int) {
 	
 	for index, value := range level {
 		if index == faultIndex {
-			fmt.Printf(" %s%2d%s", shared.LIGHT_RED, value, shared.RESET)
+			fmt.Printf(" %s%2d%s", shared.LightRed, value, shared.Reset)
 		} else {
 			fmt.Printf(" %2d", value)
 		}
@@ -110,10 +110,9 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataTest)
+	path := shared.SelectForTestOrActual(DataActual, DataTest)
 
-	lines, err := shared.ReadLines(path)
-	shared.ExitOnError("Couldn't read: " + path, err)
+	lines, _ := shared.ReadLines(path)
 	lines = shared.RemoveCommentsAndBlanks(lines)
 	
 	allLevels := parse(lines)

@@ -9,5 +9,7 @@ use (
 	./adv-03-2
 	./adv-04-1
 	./adv-04-2
+	./adv-05-1
+	./adv-05-2
 	./shared
 )

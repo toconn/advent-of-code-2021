@@ -53,10 +53,9 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataActual)
+	path := shared.SelectForTestOrActual(DataActual, DataActual)
 
-	lines, err := shared.ReadLinesWithoutCommentsBlanks(path)
-	shared.ExitOnError("Couldn't read: " + path, err)
+	lines, _ := shared.ReadLinesWithoutCommentsBlanks(path)
 	
 	instructions := extractLinesInstructions(lines)
 

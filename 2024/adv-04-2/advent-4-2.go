@@ -68,9 +68,8 @@ func isMas(dataBlock DataBlock, point Vector, offset Vector) bool {
 		dataBlock.letterAt(add(point, offset.invert())) == 'S'
 }
 
-func findXmas(lines []string) ([][]rune, int) {
+func findXmas(data DataBlock) ([][]rune, int) {
 
-	data := toRuneSlices(lines)
 	dimensions := data.dimensions()
 
 	findCount := 0
@@ -106,7 +105,7 @@ func isXmas(dataBlock *DataBlock, point Vector) bool {
 	return count == 2
 }
 
-func toRuneSlices(lines []string) DataBlock {
+func toDataBlock(lines []string) DataBlock {
 
 	data := make([][]rune, len(lines))
 	result := make([][]rune, len(lines))
@@ -134,18 +133,17 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataTest)
+	path := shared.SelectForTestOrActual(DataActual, DataTest)
 
-	lines, err := shared.ReadLinesWithoutCommentsBlanks(path)
-	shared.ExitOnError("Couldn't read: " + path, err)
+	lines, _ := shared.ReadLinesWithoutCommentsBlanks(path)
 
 	for _, line := range lines {
 		print(string(line))
 	}
 	print()
 
-
-	results, findCount := findXmas(lines)
+	data := toDataBlock(lines)
+	results, findCount := findXmas(data)
 
 	for _, line := range results {
 		print(string(line))

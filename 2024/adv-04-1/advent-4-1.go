@@ -158,7 +158,7 @@ func main() {
 
 	shared.Title(Title)
 
-	path := shared.SelectRunOption(DataActual, DataTest)
+	path := shared.SelectForTestOrActual(DataActual, DataTest)
 
 	lines, err := shared.ReadLinesWithoutCommentsBlanks(path)
 	shared.ExitOnError("Couldn't read: " + path, err)

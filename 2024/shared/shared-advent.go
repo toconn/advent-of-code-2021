@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func SelectRunOption(actual string, test string) string {
+func SelectForTestOrActual(actual string, test string) string {
 
 	if IsActual() {
 		return actual
